@@ -3,23 +3,19 @@ module IssuePatch
 		base.send(:include, InstanceMethods)
 
 		# Wrap the methods we are extending
-		base.alias_method_chain :safe_attribute_names, :block_closed_item_fields
+		base.alias_method_chain :safe_attribute_names, :removed_closed_item_fields
 
 		# Exectue this code at the class level (not instance level)
 	end
 
 	module InstanceMethods
 			
-		def safe_attribute_names_with_block_closed_item_fields(user=nil)
-			names = safe_attribute_names_without_block_closed_item_fields(user)				
-			if was_closed?
-				names = 'status_id' 
-				if status_id_changed? && !status.is_closed?
-					names = safe_attribute_names_without_block_closed_item_fields(user)			
-				end
+		def safe_attribute_names_with_removed_closed_item_fields(user=nil)
+			if status_was.is_closed? && !reopened?
+				'status_id' 
+			else
+				safe_attribute_names_without_removed_closed_item_fields(user)
 			end
-			names
-
 		end
 	end
 end
