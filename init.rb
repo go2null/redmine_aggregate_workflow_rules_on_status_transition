@@ -1,7 +1,7 @@
 
-Redmine::Plugin.register :redmine_block_issue_updates_when_closed do
-	name 'Block all issue updates when issue is closed'
-	description 'Disallows updating issue fields when the issue is locked - allows moving between statuses with different field requirements'
+Redmine::Plugin.register :redmine_aggregate_workflow_rules_on_status_transition do
+	name 'Aggregate Workflow Rules Plugin'
+	description 'Plugin to aggregate workflow rules between status transitions'
 	url ''
 
 	author 'farkwun'

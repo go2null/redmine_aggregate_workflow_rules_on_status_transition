@@ -3,7 +3,7 @@ module IssuePatch
 		base.send(:include, InstanceMethods)
 
 		# Wrap the methods we are extending
-		base.alias_method_chain :workflow_rule_by_attribute, :aggregate_workflows
+		base.alias_method_chain :workflow_rule_by_attribute, :aggregate_rules
 
 		# Exectue this code at the class level (not instance level)
 	end
@@ -13,25 +13,25 @@ module IssuePatch
 	  	# aggregates/ORs workflows so that switching to a status with  
 	 	# read_only fields (that should be filled once in a read-only status)
 	  	# changes them to required **during the change only** 
-		def workflow_rule_by_attribute_with_aggregate_workflows(user=nil)
+		def workflow_rule_by_attribute_with_aggregate_rules(user=nil)
 
 		 # change the status_id to the old status so as not to have to 
-		 # change the innards fo the workflow_rule_by_attribute method.
+		 # change the innards of the workflow_rule_by_attribute method.
 		  
 		 # Storing result_was first is because the @workflow_rule_by_attribute
 		 # instance variable is set in the without method - in order to avoid
 		 # having to set the instance variable at the end of this method, 
 		 # having the order in this way sets the instance variable as originally
 		 # intended
-		 status_temp = self.status_id
+		 status_is = self.status_id
 		 self.status_id = status_id_was
 
 		 # store the result
-	     result_was = workflow_rule_by_attribute_without_aggregate_workflows(user)
+		 result_was = workflow_rule_by_attribute_without_aggregate_rules(user)
 
 		 # switch back to the current status
-		 self.status_id = status_temp
-		 result_is = workflow_rule_by_attribute_without_aggregate_workflows(user)
+		 self.status_id = status_is
+		 result_is = workflow_rule_by_attribute_without_aggregate_rules(user)
 
 		 result = result_is
 		 # normal behaviour if the two hashes are the same (in other words, 
