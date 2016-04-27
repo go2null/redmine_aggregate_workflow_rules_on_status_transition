@@ -42,7 +42,7 @@ module IssuePatch
 		   # set to required instead
 		   result_is.each do |k, v|
 			 if v == 'readonly' && result_was[k] != 'readonly'
-			   result[k] = 'required'
+			   result[k] = (result_was[k] == 'required') ? 'required' : 'optional'
 			 end
 		   end
 		 end
