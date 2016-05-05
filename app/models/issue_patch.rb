@@ -26,7 +26,7 @@ module IssuePatch
 		 status_is = self.status_id
 		 self.status_id = status_id_was
 
-		 # store the result
+		 # store the result as a hash of field, rule
 		 result_was = workflow_rule_by_attribute_without_aggregate_rules(user)
 
 		 # switch back to the current status
@@ -39,11 +39,10 @@ module IssuePatch
 		 unless result_is == result_was
 		   # for every value that is read_only in the current status 
 		   # but is not read_only in the previous one,
-		   # set to required instead
-		   result_is.each do |k, v|
-			 if v == 'readonly' && result_was[k] != 'readonly'
-			   result[k] = 'required'
-			 end
+		   # set to previous instead
+		   result_is.each do |field, rule|
+			 # TODO: Path analysis for smarter rule assignment - Git issue #1
+		 	 result[field] = result_was[field] if rule == 'readonly'
 		   end
 		 end
 		 result
