@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_aggregate_workflow_rules_on_status_transition 
 	author_url 'https://github.com/farkwun'
 
 	version '0.1'
-	requires_redmine :version_or_higher => '2.0.0'
+	requires_redmine :version => '2.6.0'
 end
 
 
