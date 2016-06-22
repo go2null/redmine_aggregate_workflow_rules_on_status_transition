@@ -24,7 +24,7 @@ module IssuePatch
 		 # having the order in this way sets the instance variable as originally
 		 # intended
 		 status_is = self.status_id
-		 self.status_id = status_id_was
+		 self.status_id = status_id_was unless status_id_was.nil?
 
 		 # store the result as a hash of field, rule
 		 result_was = workflow_rule_by_attribute_without_aggregate_rules(user)
